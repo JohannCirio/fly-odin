@@ -1,2 +1,53 @@
-<h1>Flights#index</h1>
-<p>Find me in app/views/flights/index.html.erb</p>
+<div class="columns">
+  <div class="column is-half is-offset-one-quarter">
+    <%= form_with model: @flight, url: flights_index_path, method: :get, local: true do |form| %>
+      <div class="field is-horizontal">
+        <div class="field-body">
+          <div class="control">
+            <div class="label is-small">Origin</div>
+            <div class="select">
+              <%= form.select :from_airport_id, @airport_code_options %>
+            </div>
+          </div>
+          <div class="control">
+            <div class="label is-small">Destination</div>
+            <div class="select">
+              <%= form.select :to_airport_id, @airport_code_options %>
+            </div>
+          </div>
+          <div class="control">
+            <div class="label is-small">Tickets</div>
+            <div class="select">
+              <%= form.select :travelers, 1..4 %>
+            </div>
+          </div>
+          <div class="control">
+            <div class="label is-small">Travel date</div>
+            <div class="select">
+              <%= form.select :departure_time, @flights_dates %>
+            </div>
+          </div>
+          <div class="control">
+            <div class="label is-small has-text-white"> qualquer</div>
+            <%= form.submit "Search", class: "button"  %>
+          </div>        
+          </div>
+        </div>
+      </div>  
+    <% end %>
+  </div>
+</div>
+<% unless @available_flights.nil? %>
+  <% if @available_flights.any? %>
+    <%= @available_flights.each do |fly| %>
+      <p><%= fly.duration %> </p>
+    <% end %>
+  <% else %>
+    <p>No flights</p>
+  <% end %>
+<% else %>
+  <p>cu</p>
+<% end %>
+
+   
+
