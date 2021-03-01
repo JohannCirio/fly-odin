@@ -39,14 +39,12 @@
 </div>
 <% unless @available_flights.nil? %>
   <% if @available_flights.any? %>
-    <%= @available_flights.each do |fly| %>
+    <% @available_flights.each do |fly| %>
       <p><%= fly.duration %> </p>
     <% end %>
   <% else %>
     <p>No flights</p>
   <% end %>
-<% else %>
-  <p>cu</p>
 <% end %>
 
    
