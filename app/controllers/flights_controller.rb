@@ -1,5 +1,6 @@
 class FlightsController < ApplicationController
   def index
+    @booking = Booking.new    
     @airports = Airport.all
     @flights= Flight.all.map { |f| f.departure_date }
     @flights = @flights.uniq

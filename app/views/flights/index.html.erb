@@ -41,7 +41,31 @@
 
 <% unless @available_flights.nil? %>
   <% if @available_flights.any? %>
-    <p>tem voo</p>
+    <%= form_with model: @booking, url: new_booking_path, method: :get, local: true do |form| %>
+      <%= form.hidden_field :quantity_of_travelers, :value => params[:travelers] %>
+      <%= form.collection_radio_buttons(:flight_id, @available_flights, :id, :duration) do |b| %>
+        <div>
+          <%= b.radio_button %>
+          <div>
+            <p>From:</p>
+            <%= b.object.from_airport.code %>
+          </div>
+          <div>
+            <p>To:</p>
+            <%= b.object.to_airport.code %>
+          </div>
+          <div>
+            <p>Expected departure:</p>
+            <%= b.object.formatted_hour %>
+          </div>
+          <div>
+            <p>Flight duration:</p>
+            <%= b.object.duration %>
+          </div>                          
+        </div>
+      <% end %>
+      <%= form.submit "Select flight", class: "button"  %>
+    <% end %>
   <% else %>
     <p>No flights</p>
   <% end %>
