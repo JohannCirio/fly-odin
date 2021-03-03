@@ -12,10 +12,12 @@ Airport.create(code: "GRU", city: "São Paulo")
 Airport.create(code: "GIG", city: "Rio de Janeiro")
 
 
-Flight.create(from_airport_id: 1, to_airport_id: 2, departure_time: "2021-03-21 11:00:00", duration: 320)
-Flight.create(from_airport_id: 1, to_airport_id: 3, departure_time: "2021-03-22 12:00:00", duration: 320)
-Flight.create(from_airport_id: 1, to_airport_id: 4, departure_time: "2021-03-23 13:00:00", duration: 320)
-Flight.create(from_airport_id: 2, to_airport_id: 1, departure_time: "2021-03-24 11:00:00", duration: 320)
-Flight.create(from_airport_id: 2, to_airport_id: 3, departure_time: "2021-03-25 12:00:00", duration: 320)
-Flight.create(from_airport_id: 2, to_airport_id: 4, departure_time: "2021-03-26 13:00:00", duration: 320)
+Flight.create(from_airport_id: 1, to_airport_id: 2, departure_date: '2021-03-21', departure_time: "11:00:00", duration: 320)
+Flight.create(from_airport_id: 1, to_airport_id: 3, departure_date: '2021-03-21', departure_time: "13:00:00", duration: 320)
+Flight.create(from_airport_id: 2, to_airport_id: 1, departure_date: '2021-03-21', departure_time: "11:00:00", duration: 320)
+Flight.create(from_airport_id: 3, to_airport_id: 1, departure_date: '2021-03-21', departure_time: "15:00:00", duration: 320)
+Flight.create(from_airport_id: 1, to_airport_id: 2, departure_date: '2021-04-21', departure_time: "11:00:00", duration: 320)
+Flight.create(from_airport_id: 1, to_airport_id: 2, departure_date: '2021-04-21', departure_time: "12:00:00", duration: 320)
+Flight.create(from_airport_id: 4, to_airport_id: 2, departure_date: '2021-04-21', departure_time: "19:00:00", duration: 320)
+
 

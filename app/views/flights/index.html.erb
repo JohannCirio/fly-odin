@@ -6,13 +6,13 @@
           <div class="control">
             <div class="label is-small">Origin</div>
             <div class="select">
-              <%= form.select :from_airport_id, @airport_code_options %>
+              <%= form.collection_select(:from_airport_id, @airports, :id, :code)%>
             </div>
           </div>
           <div class="control">
             <div class="label is-small">Destination</div>
             <div class="select">
-              <%= form.select :to_airport_id, @airport_code_options %>
+              <%= form.collection_select(:to_airport_id, @airports, :id, :code)  %>
             </div>
           </div>
           <div class="control">
@@ -21,11 +21,12 @@
               <%= form.select :travelers, 1..4 %>
             </div>
           </div>
-          <div class="control">
+         <div class="control">
             <div class="label is-small">Travel date</div>
             <div class="select">
-              <%= form.select :departure_time, @flights_dates %>
+              <%= form.select :departure_date, @flights %>
             </div>
+            
           </div>
           <div class="control">
             <div class="label is-small has-text-white"> qualquer</div>
@@ -37,11 +38,10 @@
     <% end %>
   </div>
 </div>
+
 <% unless @available_flights.nil? %>
   <% if @available_flights.any? %>
-    <% @available_flights.each do |fly| %>
-      <p><%= fly.duration %> </p>
-    <% end %>
+    <p>tem voo</p>
   <% else %>
     <p>No flights</p>
   <% end %>
