@@ -9,7 +9,7 @@ class Flight < ApplicationRecord
   validates :duration, presence: true
 
   def formatted_hour
-    self.departure_time.strftime("%H:%M:%S")
+    self.departure_time.strftime("%H:%M")
   end
 
     

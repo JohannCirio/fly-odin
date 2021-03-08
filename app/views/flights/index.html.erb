@@ -1,70 +1,90 @@
 <div class="columns">
   <div class="column is-half is-offset-one-quarter">
     <%= form_with model: @flight, url: flights_index_path, method: :get, local: true do |form| %>
-      <div class="field is-horizontal">
-        <div class="field-body">
-          <div class="control">
+      <div class="columns is-gapless">
+          <div class="column">
             <div class="label is-small">Origin</div>
             <div class="select">
               <%= form.collection_select(:from_airport_id, @airports, :id, :code)%>
             </div>
           </div>
-          <div class="control">
+          <div class="column">
             <div class="label is-small">Destination</div>
             <div class="select">
               <%= form.collection_select(:to_airport_id, @airports, :id, :code)  %>
             </div>
           </div>
-          <div class="control">
+          <div class="column">
             <div class="label is-small">Tickets</div>
             <div class="select">
               <%= form.select :travelers, 1..4 %>
             </div>
           </div>
-         <div class="control">
+         <div class="column">
             <div class="label is-small">Travel date</div>
             <div class="select">
               <%= form.select :departure_date, @flights %>
             </div>
-            
           </div>
-          <div class="control">
+          <div class="column">
             <div class="label is-small has-text-white"> qualquer</div>
             <%= form.submit "Search", class: "button"  %>
           </div>        
           </div>
-        </div>
       </div>  
     <% end %>
   </div>
 </div>
 
+
 <% unless @available_flights.nil? %>
   <% if @available_flights.any? %>
+    <div class="columns">
+      <h1 class="title column has-text-info is-4 is-offset-one-quarter">Available Flights for  <%= params[:departure_date].to_datetime.strftime("%d/%m/%Y") %>  </h1>
+    </div>
     <%= form_with model: @booking, url: new_booking_path, method: :get, local: true do |form| %>
       <%= form.hidden_field :quantity_of_travelers, :value => params[:travelers] %>
       <%= form.collection_radio_buttons(:flight_id, @available_flights, :id, :duration) do |b| %>
-        <div>
-          <%= b.radio_button %>
-          <div>
-            <p>From:</p>
-            <%= b.object.from_airport.code %>
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter card">
+            <div class="columns card-content">
+                <div class="column  is-narrow has-text-centered">
+                  <div class="block">
+                    <%= b.radio_button(class: "radio has-text-centered") %>
+                  </div>
+                </div>
+                <div class="column has-text-centered">
+                  <div class="is-size-4">
+                    <%= b.object.formatted_hour %>
+                  </div>
+                  <span class="icon-text">
+                    <span class="icon has-text-link">
+                      <%= icon('fas', 'plane-departure')%>                
+                    </span>
+                    <%= b.object.from_airport.code %>
+                  </span>
+                </div>
+                
+                <div class="column has-text-centered">
+                  <div class="is-size-4">
+                    <%= (b.object.departure_time + b.object.duration * 60).strftime("%H:%M") %>
+                  </div>
+                  <span class="icon-text">
+                    <span class="icon has-text-link">
+                      <%= icon('fas', 'plane-arrival')%>                
+                    </span>
+                    <%= b.object.to_airport.code %>
+                  </span>
+                </div>
+            </div>                          
           </div>
-          <div>
-            <p>To:</p>
-            <%= b.object.to_airport.code %>
-          </div>
-          <div>
-            <p>Expected departure:</p>
-            <%= b.object.formatted_hour %>
-          </div>
-          <div>
-            <p>Flight duration:</p>
-            <%= b.object.duration %>
-          </div>                          
         </div>
       <% end %>
-      <%= form.submit "Select flight", class: "button"  %>
+      <div class="columns">
+        <div class="column is-offset-one-quarter">
+          <%= form.submit "Select flight", class: "button is-info"  %>    
+        </div>
+      </div>
     <% end %>
   <% else %>
     <p>No flights</p>
