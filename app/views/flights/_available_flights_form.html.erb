@@ -1,0 +1,44 @@
+<%= form_with model: @booking, url: new_booking_path, method: :get, local: true do |form| %>
+      <%= form.hidden_field :quantity_of_travelers, :value => params[:travelers] %>
+      <%= form.collection_radio_buttons(:flight_id, @available_flights, :id, :duration) do |b| %>
+        <div class="columns">
+          <div class="column is-one-third is-offset-one-third card">
+            <div class="columns card-content">
+                <div class="column  is-narrow has-text-centered">
+                  <div class="block">
+                    <%= b.radio_button(checked: "checked", class: "radio has-text-centered") %>
+                  </div>
+                </div>
+                <div class="column has-text-centered">
+                  <div class="is-size-4">
+                    <%= b.object.formatted_hour %>
+                  </div>
+                  <span class="icon-text">
+                    <span class="icon has-text-link">
+                      <%= icon('fas', 'plane-departure')%>                
+                    </span>
+                    <%= b.object.from_airport.code %>
+                  </span>
+                </div>
+                
+                <div class="column has-text-centered">
+                  <div class="is-size-4">
+                    <%= (b.object.departure_time + b.object.duration * 60).strftime("%H:%M") %>
+                  </div>
+                  <span class="icon-text">
+                    <span class="icon has-text-link">
+                      <%= icon('fas', 'plane-arrival')%>                
+                    </span>
+                    <%= b.object.to_airport.code %>
+                  </span>
+                </div>
+            </div>                          
+          </div>
+        </div>
+      <% end %>
+      <div class="columns">
+        <div class="column is-offset-one-third">
+          <%= form.submit "Select flight", class: "button is-info"  %>    
+        </div>
+      </div>
+    <% end %>

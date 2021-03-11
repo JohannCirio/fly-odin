@@ -1,1 +1,112 @@
-qualquer coisa
+<section class="hero is-link">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Fly-Odin</h1>
+      <h2 class="subtitle">Flight details</h2>
+    </div>  
+  </div>
+</section>
+
+<div class="columns">
+  <div class="column is-half is-offset-one-quarter card">
+    <div class="columns card-content">
+
+      <div class="column has-text-centered">
+
+        <div class="content is-size-4 ">
+          <p class="is-size-5">Departure date</p>
+          <%= @desired_flight.departure_date.strftime("%d/%m/%Y")%>
+        </div>
+
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="is-size-4">
+          <%= @desired_flight.departure_time.strftime("%H:%M")%>
+        </div>
+        <span class="icon-text">
+          <span class="icon has-text-link">
+            <%= icon('fas', 'plane-departure')%>                
+          </span>
+          <%= @desired_flight.from_airport.code %>
+        </span>
+      </div> 
+
+      <div class="column has-text-centered">
+        <div class="is-size-4">
+          <%= (@desired_flight.departure_time + @desired_flight.duration * 60).strftime("%H:%M") %>
+        </div>
+        <span class="icon-text">
+            <span class="icon has-text-link">
+              <%= icon('fas', 'plane-arrival')%>                
+            </span>
+            <%= @desired_flight.to_airport.code %>
+            </span>
+        </div>
+      </div>                          
+    </div>
+  </div>
+
+
+
+<section class="section">
+  <div class="columns">
+    <div class="column is-three-fifths">
+      <p class="title is-4 has-text-white">Passengers information</p>
+      
+      <% if @booking.errors.any? %>
+        <div class="notification is-warning">
+          <% @booking.travelers.each_with_index do |t, index| %>
+            <p>Passenger's <%= index + 1  %></p>
+            <% t.errors.full_messages.each do |error| %>
+              <li> <%= error %> </li>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+      <%= form_with model: @booking, url: bookings_path, method: :post, local: true do |form| %>
+        <%= form.hidden_field :quantity_of_travelers, :value => params[:booking][:quantity_of_travelers] %>
+        <%= form.hidden_field :flight_id, :value => params[:booking][:flight_id] %>  
+        <div class="columns">
+          <div class="column">
+            <%= form.fields_for :travelers do |travelers_form| %>
+
+              <h2 class="title is-4 has-text-white">Passenger  <%= travelers_form.index + 1 %> </h2>
+              <div class="field">
+                <div class="field is-horizontal">
+                  <div class="field-label">
+                    <%= travelers_form.label :name , class: "label has-text-white"%>                
+                  </div>
+                  <div class="field-body">
+                    <div class="control">
+                      <%= travelers_form.text_field :name, class: "input" %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field is-horizontal">
+                  <div class="field-label">
+                    <%= travelers_form.label :email , class: "label has-text-white"%>                
+                  </div>
+                  <div class="field-body">
+                    <div class="control is-expanded">
+                      <%= travelers_form.email_field :email, class: "input" %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            
+            <% end %>
+            <%= form.submit "Submit", class: "button is-info"  %> 
+          </div>
+        </div>
+
+          
+
+      <% end %>
+  
+</section>

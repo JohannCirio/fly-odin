@@ -13,7 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+ $body-background-color: hsl(217, 71%, 53%);
+  
  @import "font-awesome-sprockets";
  @import "font-awesome";
  @import "bulma";
+
+
  

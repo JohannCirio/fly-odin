@@ -1,0 +1,51 @@
+<%= form_with model: @flight, url: flights_index_path, method: :get, local: true do |form| %>
+  
+  <div class="field is-horizontal">
+    <div class="field-body">
+
+      <div class="field">
+        <label class="label has-text-white">Origin</label>
+        <p class="control is-expanded">
+          <div class="select is-fullwidth">
+            <%= form.collection_select(:from_airport_id, @airports, :id, :code)%>
+          </div>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label has-text-white">Destination</label>
+        <p class="control is-expanded">
+          <div class="select is-fullwidth">
+            <%= form.collection_select(:to_airport_id, @airports, :id, :code)  %>
+          </div>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label has-text-white">Tickets</label>
+        <p class="control is-expanded">
+          <div class="select is-fullwidth">
+            <%= form.select :travelers, 1..4 %>
+          </div>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label has-text-white">Travel date</label>
+        <p class="control is-expanded">
+          <div class="select is-fullwidth">
+            <%= form.select :departure_date, @flights %>
+          </div>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label has-text-link">□</label>
+        <p class="control is-expanded">
+          <%= form.submit "Search", class: "button " %>
+        </p>
+      </div>
+
+    </div>
+  </div>
+<% end %>
