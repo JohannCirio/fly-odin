@@ -9,7 +9,10 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @desired_flight = Flight.find(@booking.flight_id)
     if @booking.save
-      redirect_to @booking, notice: "Booking successful"
+      @booking.travelers.each do |traveler|
+        PassengerMailer.with(booking: @booking, traveler: traveler).booking_confirmation.deliver_now
+      end
+      redirect_to @booking, notice: "Booking successful!"
     else
       render :action => "new"
     end
